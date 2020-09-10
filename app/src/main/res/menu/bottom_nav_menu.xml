@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_quakes"
+        android:icon="@drawable/ic_outline_flag"
+        android:title="@string/title_quake" />
+
+    <item
+        android:id="@+id/navigation_statistics"
+        android:icon="@drawable/ic_bar_chart"
+        android:title="@string/title_statistics" />
+
+    <item
+        android:id="@+id/navigation_about"
+        android:icon="@drawable/ic_person"
+        android:title="@string/title_about" />
+
+</menu>
