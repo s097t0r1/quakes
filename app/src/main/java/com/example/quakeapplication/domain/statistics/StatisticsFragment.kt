@@ -1,4 +1,4 @@
-package com.example.quakeapplication.ui.about
+package com.example.quakeapplication.domain.statistics
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.quakeapplication.R
 
-class AboutFragment : Fragment() {
+class StatisticsFragment : Fragment() {
 
-    private lateinit var aboutViewModel: AboutViewModel
+    private lateinit var statisticsViewModel: StatisticsViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        aboutViewModel =
-                ViewModelProviders.of(this).get(AboutViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_about, container, false)
-        val textView: TextView = root.findViewById(R.id.text_notifications)
-        aboutViewModel.text.observe(viewLifecycleOwner, Observer {
+        statisticsViewModel =
+                ViewModelProviders.of(this).get(StatisticsViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_statistics, container, false)
+        val textView: TextView = root.findViewById(R.id.text_dashboard)
+        statisticsViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

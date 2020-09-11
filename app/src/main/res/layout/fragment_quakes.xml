@@ -6,13 +6,13 @@
     <data>
         <variable
             name="quakesViewModel"
-            type="com.example.quakeapplication.ui.quakes.QuakesViewModel" />
+            type="com.example.quakeapplication.domain.quakes.QuakesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.quakes.QuakesFragment">
+        tools:context=".domain.quakes.QuakesFragment">
 
         <TextView
             android:id="@+id/text_home"

@@ -1,15 +1,12 @@
-package com.example.quakeapplication.ui.quakes
+package com.example.quakeapplication.domain.quakes
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.example.quakeapplication.R
 import com.example.quakeapplication.databinding.FragmentQuakesBinding
 
@@ -29,7 +26,7 @@ class QuakesFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(QuakesViewModel::class.java)
 
         binding.apply {
-            lifecycleOwner = lifecycleOwner
+            lifecycleOwner = viewLifecycleOwner
             quakesViewModel = viewModel
         }
 

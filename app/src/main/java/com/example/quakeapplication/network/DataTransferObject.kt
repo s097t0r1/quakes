@@ -1,11 +1,12 @@
 package com.example.quakeapplication.network
 
+import com.example.quakeapplication.database.DatabaseQuake
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-class FeatureCollection(val features: List<Feature>) {
-    public operator fun get(index: Int) = features[index]
-}
+class FeatureCollection(
+    val features: List<Feature>
+)
 
 
 @JsonClass(generateAdapter = true)
@@ -27,3 +28,19 @@ data class Properties(
     val locality: String,
     val quality: String
 )
+
+fun FeatureCollection.asDatabaseModel(): List<DatabaseQuake> {
+    return features.map {
+        DatabaseQuake(
+            publicID = it.properties.publicID,
+            time = it.properties.time,
+            depth = it.properties.depth,
+            magnitude = it.properties.magnitude,
+            mmi = it.properties.mmi,
+            locality = it.properties.locality,
+            quality = it.properties.quality,
+            latitude = it.geometry.coordinates[0],
+            longitude = it.geometry.coordinates[1]
+        )
+    }
+}
