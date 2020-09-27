@@ -6,27 +6,22 @@
     <data>
         <variable
             name="quakesViewModel"
-            type="com.example.quakeapplication.domain.quakes.QuakesViewModel" />
+            type="com.example.quakeapplication.quakes.QuakesViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".domain.quakes.QuakesFragment">
+        tools:context=".quakes.QuakesFragment"
+        onRefresh="@{() -> quakesViewModel.getQuakes(true)}"
+        >
 
-        <TextView
-            android:id="@+id/text_home"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:text="@{quakesViewModel.text}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_quakeList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 </layout>

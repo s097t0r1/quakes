@@ -1,4 +1,4 @@
-package com.example.quakeapplication.domain.statistics
+package com.example.quakeapplication.statistics
 
 import android.os.Bundle
 import android.view.LayoutInflater

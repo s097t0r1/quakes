@@ -1,6 +1,6 @@
-package com.example.quakeapplication.network
+package com.example.quakeapplication.data.source.remote
 
-import com.example.quakeapplication.database.DatabaseQuake
+import com.example.quakeapplication.data.source.local.DatabaseQuake
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
@@ -24,7 +24,7 @@ data class Properties(
     val time: String,
     val depth: Double,
     val magnitude: Double,
-    val mmi: Double,
+    val mmi: Int,
     val locality: String,
     val quality: String
 )

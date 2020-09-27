@@ -1,8 +1,8 @@
-package com.example.quakeapplication.database
+package com.example.quakeapplication.data.source.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.quakeapplication.domain.Quake
+import com.example.quakeapplication.data.Quake
 
 @Entity(tableName = "quakes")
 data class DatabaseQuake(
@@ -11,7 +11,7 @@ data class DatabaseQuake(
     val time: String,
     val depth: Double,
     val magnitude: Double,
-    val mmi: Double,
+    val mmi: Int,
     val locality: String,
     val quality: String,
     val longitude: Double,

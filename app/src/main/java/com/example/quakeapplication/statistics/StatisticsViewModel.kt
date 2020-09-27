@@ -1,4 +1,4 @@
-package com.example.quakeapplication.domain.statistics
+package com.example.quakeapplication.statistics
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

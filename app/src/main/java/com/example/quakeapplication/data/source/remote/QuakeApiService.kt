@@ -1,4 +1,4 @@
-package com.example.quakeapplication.network
+package com.example.quakeapplication.data.source.remote
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -8,7 +8,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 
-private const val BASE_URL = "https://api.geonet.org.nz/"
+const val BASE_URL: String = "https://api.geonet.org.nz/"
 
 private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 

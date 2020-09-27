@@ -1,22 +1,25 @@
-package com.example.quakeapplication.database
+package com.example.quakeapplication.data.source.local
 
 import android.content.Context
-import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
 interface QuakesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(quakes: List<DatabaseQuake>)
+    fun insertQuakes(quakes: List<DatabaseQuake>)
 
     @Query("SELECT * FROM quakes WHERE mmi=:MMI")
-    fun getQuakes(MMI: Double): LiveData<List<DatabaseQuake>>
+    fun getQuakes(MMI: Int): List<DatabaseQuake>
 
     @Query("SELECT * FROM quakes WHERE publicID=:publicID")
     fun getQuake(publicID: String): DatabaseQuake
 
+    @Query("DELETE FROM quakes")
+    fun deleteQuakes()
+
 }
 
+@Database(entities = [DatabaseQuake::class], version = 1, exportSchema = false)
 abstract class QuakesDatabase : RoomDatabase() {
     abstract val quakesDao: QuakesDao
 

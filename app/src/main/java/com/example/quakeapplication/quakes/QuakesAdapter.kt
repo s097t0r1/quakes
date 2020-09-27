@@ -1,13 +1,12 @@
-package com.example.quakeapplication.domain.quakes
+package com.example.quakeapplication.quakes
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quakeapplication.databinding.QuakeItemBinding
-import com.example.quakeapplication.domain.Quake
+import com.example.quakeapplication.data.Quake
 
 class QuakesAdapter() : ListAdapter<Quake, QuakesAdapter.QuakesViewHolder>(QuakesDiffCallback()) {
 
