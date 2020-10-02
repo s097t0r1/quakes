@@ -26,12 +26,16 @@ class QuakesViewModel @Inject constructor(
     val errorLoadingData: LiveData<Boolean>
         get() = _errorLoadingData
 
+    private val _isDataLoading = MutableLiveData<Boolean>()
+    val isDataLoading: LiveData<Boolean>
+        get() = _isDataLoading
+
     init {
-        setFilterMMI(0)
+        setFilterMMI(3)
         getQuakes()
     }
 
-    private fun setFilterMMI(filterMMI: Int) {
+    fun setFilterMMI(filterMMI: Int) {
         if(filterMMI in 0..10) {
             _filterValue.value = filterMMI
             getQuakes()
@@ -41,7 +45,11 @@ class QuakesViewModel @Inject constructor(
     }
 
     fun getQuakes(forceUpdate: Boolean = false) {
+
+        _isDataLoading.value = true
+
         viewModelScope.launch {
+
             val quakesResult = repository.getQuakes(_filterValue.value!!, forceUpdate)
 
             if(quakesResult is Success)
@@ -50,15 +58,14 @@ class QuakesViewModel @Inject constructor(
                 _quakesList.value = _quakesList.value ?: emptyList()
                 _errorLoadingData.value = true
             }
-
+            _isDataLoading.value = false
         }
+
+
     }
 
     fun onErrorLoadingDataComplete() {
         _errorLoadingData.value = false
     }
 
-    fun loging() {
-        Log.d("SwipeRefershLayout", "Swiping")
-    }
 }

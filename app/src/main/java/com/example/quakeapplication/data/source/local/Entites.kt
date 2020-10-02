@@ -18,6 +18,8 @@ data class DatabaseQuake(
     val latitude: Double
 )
 
+
+
 fun List<DatabaseQuake>.asDomainModel(): List<Quake> {
     return map {
         Quake (

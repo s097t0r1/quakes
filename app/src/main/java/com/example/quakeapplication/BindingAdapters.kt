@@ -1,15 +1,22 @@
 package com.example.quakeapplication
 
-import android.util.Log
 import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import timber.log.Timber
 
 @BindingAdapter("onRefresh")
 fun setRefreshListener(view: SwipeRefreshLayout, clickListener: () -> Unit) {
     clickListener.let {
         view.setOnRefreshListener {
             clickListener()
-            view.isRefreshing = false
         }
+    }
+}
+
+@BindingAdapter("isRefreshing")
+fun setIsRefreshing(view: SwipeRefreshLayout, isDataLoading: Boolean?) {
+    isDataLoading?.let {
+        view.isRefreshing = isDataLoading
+        Timber.d(isDataLoading.toString())
     }
 }

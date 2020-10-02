@@ -5,16 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.quakeapplication.databinding.QuakeItemBinding
 import com.example.quakeapplication.data.Quake
+import com.example.quakeapplication.databinding.ItemQuakeBinding
 
 class QuakesAdapter() : ListAdapter<Quake, QuakesAdapter.QuakesViewHolder>(QuakesDiffCallback()) {
 
-    class QuakesViewHolder private constructor(val binding: QuakeItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class QuakesViewHolder private constructor(val binding: ItemQuakeBinding) : RecyclerView.ViewHolder(binding.root) {
 
         companion object {
             fun from(parent: ViewGroup): QuakesViewHolder {
-                val binding = QuakeItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val binding = ItemQuakeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 return QuakesViewHolder(binding)
             }
         }

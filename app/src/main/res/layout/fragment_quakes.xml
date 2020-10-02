@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         tools:context=".quakes.QuakesFragment"
         onRefresh="@{() -> quakesViewModel.getQuakes(true)}"
-        >
+        isRefreshing="@{quakesViewModel.isDataLoading}">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_quakeList"

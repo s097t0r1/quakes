@@ -5,27 +5,37 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.example.quakeapplication.R
+import com.example.quakeapplication.databinding.FragmentStatisticsBinding
+import dagger.android.support.DaggerFragment
+import javax.inject.Inject
 
-class StatisticsFragment : Fragment() {
+class StatisticsFragment : DaggerFragment() {
 
-    private lateinit var statisticsViewModel: StatisticsViewModel
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    val viewModel: StatisticsViewModel by viewModels { viewModelFactory }
+
+    private lateinit var binding: FragmentStatisticsBinding
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        statisticsViewModel =
-                ViewModelProviders.of(this).get(StatisticsViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_statistics, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        statisticsViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_statistics, container, false)
+
+        viewModel.test()
+
+        return binding.root
     }
 }

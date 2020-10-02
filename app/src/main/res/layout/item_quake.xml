@@ -24,6 +24,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="35 km south-east of Tolaga Bay" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{quake.publicID}" />
 
     </LinearLayout>
 </layout>
