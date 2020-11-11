@@ -1,12 +1,11 @@
-package com.example.quakeapplication.quakes
+package com.example.quakeapplication.ui.quakes
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.quakeapplication.data.Quake
 import com.example.quakeapplication.data.Success
 import com.example.quakeapplication.data.source.QuakeRepository
 import kotlinx.coroutines.launch
-import java.lang.Exception
+import timber.log.Timber
 import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
@@ -18,7 +17,7 @@ class QuakesViewModel @Inject constructor(
     val quakesList: LiveData<List<Quake>>
         get() = _quakesList
 
-    private val _filterValue = MutableLiveData<Int>()
+    private val _filterValue = MutableLiveData<Int>(0)
     val filterValue: LiveData<Int>
         get() = _filterValue
 
@@ -29,6 +28,10 @@ class QuakesViewModel @Inject constructor(
     private val _isDataLoading = MutableLiveData<Boolean>()
     val isDataLoading: LiveData<Boolean>
         get() = _isDataLoading
+
+    private val _isEmptyResult = MutableLiveData<Boolean>(false)
+    val isEmptyResult: LiveData<Boolean>
+        get() = _isEmptyResult
 
     init {
         setFilterMMI(3)
@@ -55,9 +58,11 @@ class QuakesViewModel @Inject constructor(
             if(quakesResult is Success)
                 _quakesList.value = quakesResult.data
             else {
-                _quakesList.value = _quakesList.value ?: emptyList()
                 _errorLoadingData.value = true
             }
+
+            _isEmptyResult.value = _quakesList.value.isNullOrEmpty()
+
             _isDataLoading.value = false
         }
 

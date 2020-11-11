@@ -1,7 +1,11 @@
 package com.example.quakeapplication.data.source.remote
 
 import com.example.quakeapplication.data.source.local.DatabaseQuake
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 @JsonClass(generateAdapter = true)
 class FeatureCollection(
@@ -29,11 +33,37 @@ data class Properties(
     val quality: String
 )
 
+@JsonClass(generateAdapter = true)
+data class StatisticNetworkContainer(
+    val magnitudeCount: MagnitudeCount,
+    val rate: Rate
+)
+
+@JsonClass(generateAdapter = true)
+data class MagnitudeCount(
+    @Json(name = "days365")
+    val forYear: Map<String, Int>,
+
+    @Json(name = "days28")
+    val forMonth: Map<String, Int>,
+
+    @Json(name = "days7")
+    val forWeek: Map<String, Int>
+)
+
+@JsonClass(generateAdapter = true)
+data class Rate(
+    val perDay: Map<String, Int>
+)
+
 fun FeatureCollection.asDatabaseModel(): List<DatabaseQuake> {
+
+    val dateFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
+
     return features.map {
         DatabaseQuake(
             publicID = it.properties.publicID,
-            time = it.properties.time,
+            time = dateFormatter.parse(it.properties.time).time,
             depth = it.properties.depth,
             magnitude = it.properties.magnitude,
             mmi = it.properties.mmi,

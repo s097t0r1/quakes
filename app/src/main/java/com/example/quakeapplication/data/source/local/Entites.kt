@@ -3,12 +3,14 @@ package com.example.quakeapplication.data.source.local
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.quakeapplication.data.Quake
+import java.text.DateFormat
+import java.util.*
 
 @Entity(tableName = "quakes")
 data class DatabaseQuake(
     @PrimaryKey
     val publicID: String,
-    val time: String,
+    val time: Long,
     val depth: Double,
     val magnitude: Double,
     val mmi: Int,
@@ -24,7 +26,7 @@ fun List<DatabaseQuake>.asDomainModel(): List<Quake> {
     return map {
         Quake (
             publicID = it.publicID,
-            time = it.time,
+            time = Date(it.time),
             depth = it.depth,
             magnitude = it.magnitude,
             mmi = it.mmi,

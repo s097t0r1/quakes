@@ -19,7 +19,7 @@ interface QuakesDao {
 
 }
 
-@Database(entities = [DatabaseQuake::class], version = 1, exportSchema = false)
+@Database(entities = [DatabaseQuake::class], version = 2, exportSchema = false)
 abstract class QuakesDatabase : RoomDatabase() {
     abstract val quakesDao: QuakesDao
 

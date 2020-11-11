@@ -4,14 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="statisticViewModel"
+            type="com.example.quakeapplication.ui.statistics.StatisticsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".statistics.StatisticsFragment">
+        tools:context=".ui.statistics.StatisticsFragment">
 
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/chart_statistic"
+            dataSet="@{statisticViewModel.dataSet}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="8dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,12 +15,17 @@ class QuakesRemoteDataSource @Inject constructor(
 
     suspend fun getQuakes(MMI: Int): Result<FeatureCollection> = withContext(Dispatchers.IO) {
         try {
-
             val result = quakeService.getQuakes(MMI)
 
-            if(result == null)
-                return@withContext Error<Nothing>(Exception("Error retreiving data"))
+            return@withContext Success(result)
+        } catch (E: Exception) {
+            return@withContext Error<Nothing>(E)
+        }
+    }
 
+    suspend fun getStatistic(): Result<StatisticNetworkContainer> = withContext(Dispatchers.IO) {
+        try {
+            val result = quakeService.getStatistic()
             return@withContext Success(result)
         } catch (E: Exception) {
             return@withContext Error<Nothing>(E)

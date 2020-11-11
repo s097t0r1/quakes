@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/item_magnitudeForWeek"
+        android:title="@string/statistic_for_week" />
+    <item android:id="@+id/item_magnitudeForMonth"
+        android:title="@string/statistic_for_month" />
+    <item android:id="@+id/item_magnitudeForYear"
+        android:title="@string/statistic_for_year" />
+
+</menu>

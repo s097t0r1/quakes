@@ -1,15 +1,14 @@
-package com.example.quakeapplication.quakes
+package com.example.quakeapplication.ui.quakes
 
 import android.os.Bundle
 import android.view.*
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.quakeapplication.R
 import com.example.quakeapplication.data.Quake
 import com.example.quakeapplication.databinding.FragmentQuakesBinding
@@ -17,6 +16,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import timber.log.Timber
 import javax.inject.Inject
+
 class QuakesFragment : DaggerFragment(), FilterDialogFragment.FilterDialogListener {
 
     @Inject
@@ -26,14 +26,19 @@ class QuakesFragment : DaggerFragment(), FilterDialogFragment.FilterDialogListen
 
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
 
         setHasOptionsMenu(true)
 
-        binding = DataBindingUtil.inflate<FragmentQuakesBinding>(inflater, R.layout.fragment_quakes, container, false).apply {
+        binding = DataBindingUtil.inflate<FragmentQuakesBinding>(
+            inflater,
+            R.layout.fragment_quakes,
+            container,
+            false
+        ).apply {
             quakesViewModel = viewModel
             lifecycleOwner = viewLifecycleOwner
         }
@@ -55,7 +60,7 @@ class QuakesFragment : DaggerFragment(), FilterDialogFragment.FilterDialogListen
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
+        return when (item.itemId) {
             R.id.action_filter -> {
                 showFilterDialog()
                 true
@@ -65,24 +70,30 @@ class QuakesFragment : DaggerFragment(), FilterDialogFragment.FilterDialogListen
     }
 
     private fun setupErrorHandlers() {
+
         viewModel.errorLoadingData.observe(viewLifecycleOwner, Observer { errorLoadingData ->
-            if(errorLoadingData) {
-                Toast.makeText(context, R.string.error_loading_data_message, Toast.LENGTH_SHORT).show()
+            if (errorLoadingData) {
+                Snackbar.make(requireView(), R.string.error_loading_data_message, Snackbar.LENGTH_SHORT).show()
                 viewModel.onErrorLoadingDataComplete()
             }
         })
+
     }
 
     private fun setupRecyclerView() {
 
         val adapter = QuakesAdapter()
 
-        binding.recyclerViewQuakeList.adapter = adapter
+
+
+        binding.recyclerViewQuakeList.apply {
+            this.adapter = adapter
+            this.addItemDecoration(QuakesItemDecoration(16))
+        }
 
         viewModel.quakesList.observe(viewLifecycleOwner, Observer { quakeList: List<Quake> ->
             adapter.submitList(quakeList)
         })
-
     }
 
     private fun showFilterDialog() {
@@ -98,7 +109,6 @@ class QuakesFragment : DaggerFragment(), FilterDialogFragment.FilterDialogListen
     override fun onDialogNegativeClick() {
         Timber.d("Negative click")
     }
-
 
 }
 

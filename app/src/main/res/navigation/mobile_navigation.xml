@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_quakes"
-        android:name="com.example.quakeapplication.quakes.QuakesFragment"
+        android:name="com.example.quakeapplication.ui.quakes.QuakesFragment"
         android:label="@string/title_quake"
         tools:layout="@layout/fragment_quakes" />
 
     <fragment
         android:id="@+id/navigation_statistics"
-        android:name="com.example.quakeapplication.statistics.StatisticsFragment"
+        android:name="com.example.quakeapplication.ui.statistics.StatisticsFragment"
         android:label="@string/title_statistics"
         tools:layout="@layout/fragment_statistics" />
 
     <fragment
         android:id="@+id/navigation_about"
-        android:name="com.example.quakeapplication.about.AboutFragment"
+        android:name="com.example.quakeapplication.ui.about.AboutFragment"
         android:label="@string/title_about"
         tools:layout="@layout/fragment_about" />
 </navigation>

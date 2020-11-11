@@ -1,4 +1,4 @@
-package com.example.quakeapplication.about
+package com.example.quakeapplication.ui.about
 
 import android.os.Bundle
 import android.view.LayoutInflater

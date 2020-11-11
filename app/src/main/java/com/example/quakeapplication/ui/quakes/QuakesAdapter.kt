@@ -1,16 +1,28 @@
-package com.example.quakeapplication.quakes
+package com.example.quakeapplication.ui.quakes
 
+import android.content.res.Resources
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.quakeapplication.convertMMItoColor
 import com.example.quakeapplication.data.Quake
 import com.example.quakeapplication.databinding.ItemQuakeBinding
+import com.example.quakeapplication.formatDate
+import java.text.DateFormat
+import kotlin.math.roundToInt
 
 class QuakesAdapter() : ListAdapter<Quake, QuakesAdapter.QuakesViewHolder>(QuakesDiffCallback()) {
 
-    class QuakesViewHolder private constructor(val binding: ItemQuakeBinding) : RecyclerView.ViewHolder(binding.root) {
+    class QuakesViewHolder private constructor(private val binding: ItemQuakeBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        private val mTextViewLocality = binding.textViewLocality
+        private val mTextViewDateOfMeasure = binding.textViewTime
+        private val mTextViewBubble = binding.textViewMMI
+        private val mViewLabel = binding.viewLabel
+
 
         companion object {
             fun from(parent: ViewGroup): QuakesViewHolder {
@@ -19,8 +31,17 @@ class QuakesAdapter() : ListAdapter<Quake, QuakesAdapter.QuakesViewHolder>(Quake
             }
         }
 
-        fun bind(quake: Quake) {
-            binding.quake = quake
+        fun bind(quake: Quake, res: Resources) {
+            mTextViewLocality.text = quake.locality
+            mTextViewDateOfMeasure.text = formatDate(quake.time)
+
+            val cardColor = convertMMItoColor(quake.magnitude.roundToInt(), res)
+
+            mTextViewBubble.bubbleColor = cardColor
+            mTextViewBubble.text = quake.magnitude.roundToInt().toString()
+
+
+            mViewLabel.setBackgroundColor(cardColor)
         }
     }
 
@@ -29,7 +50,7 @@ class QuakesAdapter() : ListAdapter<Quake, QuakesAdapter.QuakesViewHolder>(Quake
     }
 
     override fun onBindViewHolder(holder: QuakesViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), holder.itemView.context.resources)
     }
 
 
