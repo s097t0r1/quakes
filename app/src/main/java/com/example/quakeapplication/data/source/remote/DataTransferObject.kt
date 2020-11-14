@@ -1,5 +1,6 @@
 package com.example.quakeapplication.data.source.remote
 
+import com.example.quakeapplication.data.Quake
 import com.example.quakeapplication.data.source.local.DatabaseQuake
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -63,7 +64,7 @@ fun FeatureCollection.asDatabaseModel(): List<DatabaseQuake> {
     return features.map {
         DatabaseQuake(
             publicID = it.properties.publicID,
-            time = dateFormatter.parse(it.properties.time).time,
+            time = dateFormatter.parse(it.properties.time)!!.time,
             depth = it.properties.depth,
             magnitude = it.properties.magnitude,
             mmi = it.properties.mmi,
@@ -71,6 +72,32 @@ fun FeatureCollection.asDatabaseModel(): List<DatabaseQuake> {
             quality = it.properties.quality,
             latitude = it.geometry.coordinates[0],
             longitude = it.geometry.coordinates[1]
+        )
+    }
+}
+
+fun FeatureCollection.isEmpty(): Boolean {
+    return features.isEmpty()
+}
+
+fun FeatureCollection.isNotEmpty(): Boolean {
+    return features.isNotEmpty()
+}
+
+
+fun FeatureCollection.asDomainModel(): Quake {
+    val dateFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
+    features[0].apply {
+        return Quake(
+            publicID = this.properties.publicID,
+            time = dateFormatter.parse(this.properties.time)!!,
+            depth = this.properties.depth,
+            magnitude = this.properties.magnitude,
+            mmi = this.properties.mmi,
+            locality = this.properties.locality,
+            quality = this.properties.quality,
+            latitude = this.geometry.coordinates[0],
+            longitude = this.geometry.coordinates[1]
         )
     }
 }

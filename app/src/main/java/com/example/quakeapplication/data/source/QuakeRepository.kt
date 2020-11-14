@@ -10,6 +10,7 @@ import com.example.quakeapplication.data.source.local.asDomainModel
 import com.example.quakeapplication.data.source.remote.QuakesRemoteDataSource
 import com.example.quakeapplication.data.source.remote.StatisticNetworkContainer
 import com.example.quakeapplication.data.source.remote.asDatabaseModel
+import com.example.quakeapplication.data.source.remote.asDomainModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -39,6 +40,18 @@ class QuakeRepository @Inject constructor(
         else
             return@withContext Error<Nothing>(Exception("Database is empty"))
     }
+
+    suspend fun getQuake(publicID: String): Result<Quake> {
+        return withContext(Dispatchers.IO) {
+            val remoteResult = remoteDataSource.getQuake(publicID)
+
+            if(remoteResult is Success)
+                return@withContext Success(remoteResult.data.asDomainModel())
+            else
+                return@withContext Error<Nothing>(Exception("Quake with this publicID isn't existed"))
+        }
+    }
+
 
     private suspend fun refreshLocalDataSource(localData: List<DatabaseQuake>) = withContext(Dispatchers.IO) {
         localDataSource.deleteAllQuakes()

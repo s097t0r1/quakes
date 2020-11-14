@@ -9,7 +9,11 @@
         android:id="@+id/navigation_quakes"
         android:name="com.example.quakeapplication.ui.quakes.QuakesFragment"
         android:label="@string/title_quake"
-        tools:layout="@layout/fragment_quakes" />
+        tools:layout="@layout/fragment_quakes" >
+        <action
+            android:id="@+id/action_navigation_quakes_to_navigation_details"
+            app:destination="@id/navigation_details" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_statistics"
@@ -22,4 +26,12 @@
         android:name="com.example.quakeapplication.ui.about.AboutFragment"
         android:label="@string/title_about"
         tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/navigation_details"
+        android:name="com.example.quakeapplication.ui.details.DetailsFragment"
+        android:label="DetailsFragment" >
+        <argument
+            android:name="publicID"
+            app:argType="string" />
+    </fragment>
 </navigation>

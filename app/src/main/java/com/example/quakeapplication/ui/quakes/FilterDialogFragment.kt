@@ -32,17 +32,19 @@ class FilterDialogFragment : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+
         return activity?.let {
+
             val builder = MaterialAlertDialogBuilder(it)
 
             builder.setTitle(R.string.filter_dialog_title)
                 .setView(requireActivity().layoutInflater.inflate(R.layout.fragment_filter_dialog, null))
-                .setPositiveButton(R.string.filter_dialog_positive_button_text) { dialog, id ->
+                .setPositiveButton(R.string.filter_dialog_positive_button_text) { dialog, _ ->
                         // Send the positive button event back to the host fragment
                         val seekBar = (dialog as AlertDialog).findViewById<Slider>(R.id.filter_seekBar)
                         listener.onDialogPositiveClick(seekBar!!.value.toInt())
                     }
-                .setNegativeButton(R.string.filter_dialog_negative_button_text) { dialog, id ->
+                .setNegativeButton(R.string.filter_dialog_negative_button_text) { _, _ ->
                     // Send the negative button event back to the host fragment
                     listener.onDialogNegativeClick()
                 }

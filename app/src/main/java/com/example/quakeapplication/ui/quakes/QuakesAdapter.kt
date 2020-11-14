@@ -1,7 +1,6 @@
 package com.example.quakeapplication.ui.quakes
 
 import android.content.res.Resources
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -11,10 +10,9 @@ import com.example.quakeapplication.convertMMItoColor
 import com.example.quakeapplication.data.Quake
 import com.example.quakeapplication.databinding.ItemQuakeBinding
 import com.example.quakeapplication.formatDate
-import java.text.DateFormat
 import kotlin.math.roundToInt
 
-class QuakesAdapter() : ListAdapter<Quake, QuakesAdapter.QuakesViewHolder>(QuakesDiffCallback()) {
+class QuakesAdapter(private val clickListener: QuakeClickListener) : ListAdapter<Quake, QuakesAdapter.QuakesViewHolder>(QuakesDiffCallback()) {
 
     class QuakesViewHolder private constructor(private val binding: ItemQuakeBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -31,7 +29,11 @@ class QuakesAdapter() : ListAdapter<Quake, QuakesAdapter.QuakesViewHolder>(Quake
             }
         }
 
-        fun bind(quake: Quake, res: Resources) {
+        fun bind(quake: Quake, clickListener: QuakeClickListener/* clickListener: QuakeListener */, res: Resources) {
+
+            binding.quake = quake
+            binding.clickListener = clickListener
+
             mTextViewLocality.text = quake.locality
             mTextViewDateOfMeasure.text = formatDate(quake.time)
 
@@ -50,7 +52,7 @@ class QuakesAdapter() : ListAdapter<Quake, QuakesAdapter.QuakesViewHolder>(Quake
     }
 
     override fun onBindViewHolder(holder: QuakesViewHolder, position: Int) {
-        holder.bind(getItem(position), holder.itemView.context.resources)
+        holder.bind(getItem(position), clickListener, holder.itemView.context.resources)
     }
 
 
@@ -65,4 +67,8 @@ class QuakesDiffCallback : DiffUtil.ItemCallback<Quake>() {
         return oldItem == newItem
     }
 
+}
+
+fun interface QuakeClickListener {
+    fun onClick(publicID: String)
 }

@@ -16,10 +16,6 @@ class QuakesLocalDataSource @Inject constructor(
     suspend fun getQuakes(MMI: Int): Result<List<DatabaseQuake>> = withContext(Dispatchers.IO) {
             try {
                 val result = DB.quakesDao.getQuakes(MMI)
-
-//                if (result.isEmpty())
-//                    return@withContext Error<Nothing>(Exception("Database is empty"))
-
                 return@withContext Success(result)
             } catch (e: Exception) {
                 return@withContext Error<Nothing>(e)
@@ -28,11 +24,8 @@ class QuakesLocalDataSource @Inject constructor(
 
     suspend fun getQuake(publicID: String): Result<DatabaseQuake> = withContext(Dispatchers.IO) {
         try {
-
             val result = DB.quakesDao.getQuake(publicID)
-
             return@withContext Success(result)
-
         } catch (E: Exception) {
             return@withContext Error<Nothing>(E)
         }

@@ -3,10 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="quake"
+            type="com.example.quakeapplication.data.Quake" />
+        <variable
+            name="clickListener"
+            type="com.example.quakeapplication.ui.quakes.QuakeClickListener" />
+    </data>
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="8dp">
+        app:cardCornerRadius="8dp"
+        android:onClick="@{() -> clickListener.onClick(quake.publicID)}">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout

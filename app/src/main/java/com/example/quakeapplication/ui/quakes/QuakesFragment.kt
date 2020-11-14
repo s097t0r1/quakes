@@ -2,16 +2,16 @@ package com.example.quakeapplication.ui.quakes
 
 import android.os.Bundle
 import android.view.*
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.navigation.fragment.findNavController
 import com.example.quakeapplication.R
 import com.example.quakeapplication.data.Quake
 import com.example.quakeapplication.databinding.FragmentQuakesBinding
+import com.example.quakeapplication.ui.details.DetailsFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
 import timber.log.Timber
@@ -71,7 +71,7 @@ class QuakesFragment : DaggerFragment(), FilterDialogFragment.FilterDialogListen
 
     private fun setupErrorHandlers() {
 
-        viewModel.errorLoadingData.observe(viewLifecycleOwner, Observer { errorLoadingData ->
+        viewModel.errorLoadingData.observe(viewLifecycleOwner, { errorLoadingData ->
             if (errorLoadingData) {
                 Snackbar.make(requireView(), R.string.error_loading_data_message, Snackbar.LENGTH_SHORT).show()
                 viewModel.onErrorLoadingDataComplete()
@@ -82,16 +82,17 @@ class QuakesFragment : DaggerFragment(), FilterDialogFragment.FilterDialogListen
 
     private fun setupRecyclerView() {
 
-        val adapter = QuakesAdapter()
-
-
+        val adapter = QuakesAdapter { publicID ->
+            findNavController().navigate(QuakesFragmentDirections.actionNavigationQuakesToNavigationDetails(publicID))
+//            Toast.makeText(context, "ID: $publicID", Toast.LENGTH_SHORT).show()
+        }
 
         binding.recyclerViewQuakeList.apply {
             this.adapter = adapter
             this.addItemDecoration(QuakesItemDecoration(16))
         }
 
-        viewModel.quakesList.observe(viewLifecycleOwner, Observer { quakeList: List<Quake> ->
+        viewModel.quakesList.observe(viewLifecycleOwner, { quakeList: List<Quake> ->
             adapter.submitList(quakeList)
         })
     }

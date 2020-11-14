@@ -1,5 +1,6 @@
 package com.example.quakeapplication.data.source.remote
 
+import android.icu.util.Freezable
 import com.example.quakeapplication.data.Result
 import com.example.quakeapplication.data.Success
 import com.example.quakeapplication.data.Error
@@ -27,6 +28,20 @@ class QuakesRemoteDataSource @Inject constructor(
         try {
             val result = quakeService.getStatistic()
             return@withContext Success(result)
+        } catch (E: Exception) {
+            return@withContext Error<Nothing>(E)
+        }
+    }
+
+    suspend fun getQuake(publicID: String): Result<FeatureCollection> = withContext(Dispatchers.IO) {
+        try {
+            val result = quakeService.getQuake(publicID)
+
+            if(result.isEmpty())
+                return@withContext Error<Nothing>(Exception("Quake with this publicID isn't existed"))
+
+            return@withContext Success(result)
+
         } catch (E: Exception) {
             return@withContext Error<Nothing>(E)
         }
